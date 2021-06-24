@@ -31,7 +31,7 @@ namespace DogGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT W.Id, w.[Name], w.ImageUrl, w.NeighborhoodId, n.Name as Neighborhood
+                        SELECT W.Id, w.[Name], w.ImageUrl, w.NeighborhoodId, n.Name as Neighborhood, n.Id as NeighborhoodId
                     FROM Walker w
                     Left Join Neighborhood n on w.NeighborhoodId = N.Id
                     ";
@@ -71,10 +71,11 @@ namespace DogGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT w.Id, w.[Name], w.ImageUrl, Neighborhood.Name as Neighborhood
-                FROM Walker w
-                Left Join Neighborhood on w.NeighborhoodId = neighborhood.id
-                WHERE w.Id = @id
+                       SELECT w.Id, w.[Name], w.ImageUrl, 
+                    n.Name as Neighborhood
+                    FROM Walker w
+                    Left Join Neighborhood n on w.NeighborhoodId = n.id
+                    WHERE w.Id =  @id
                     ";
 
                     cmd.Parameters.AddWithValue("@id", id);
@@ -88,7 +89,13 @@ namespace DogGo.Repositories
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
-                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
+                            Neighborhood = new Neighborhood
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("Name"))
+
+                            }
+                           
                         };
 
                         reader.Close();
