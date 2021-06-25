@@ -1,4 +1,6 @@
-﻿using DogGo.Models;
+﻿using DogGo.Interfaces;
+using DogGo.Models;
+using DogGo.Models.ViewModels;
 using DogGo.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,12 +13,22 @@ namespace DogGo.Controllers
 {
     public class WalkersController : Controller
     {
+        private readonly IWalkerRepository _walkerRepository;
+        private readonly IWalksRepository _walksRepository;
 
+        public WalkersController(
+            IWalkerRepository walkerRepository,
+            IWalksRepository walksRepository
+            )
+        {
+            _walkerRepository = walkerRepository;
+            _walksRepository = walksRepository;
+        }
  
         // GET: WalkersController
         public ActionResult Index()
         {
-            List<Walker> walkers = _walkerRepo.GetAllWalkers();
+            List<Walker> walkers = _walkerRepository.GetAllWalkers();
 
             return View(walkers);
         }
@@ -24,13 +36,21 @@ namespace DogGo.Controllers
         // GET: WalkersController/Details/5
         public ActionResult Details(int id)
         {
-            Walker walker = _walkerRepo.GetWalkerById(id);
+            Walker walker = _walkerRepository.GetWalkerById(id);
+            List<Walks> walks = _walksRepository.GetWalksByWalkerId(id);
+
+            WalkerProfileViewModel vm = new WalkerProfileViewModel()
+            {
+                Walker = walker,
+                Walks = walks
+            };
 
             if (walker == null)
             {
                 return NotFound();
             }
-            return View(walker);
+
+            return View(vm);
         }
 
         // GET: WalkersController/Create
@@ -96,12 +116,7 @@ namespace DogGo.Controllers
             }
         }
 
-        private readonly IWalkerRepository _walkerRepo;
 
-        // ASP.NET will give us an instance of our Walker Repository. This is called "Dependency Injection"
-        public WalkersController(IWalkerRepository walkerRepository)
-        {
-            _walkerRepo = walkerRepository;
-        }
+      
     }
 }

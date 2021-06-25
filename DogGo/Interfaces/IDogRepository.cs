@@ -13,5 +13,6 @@ namespace DogGo.Interfaces
         void AddDog(Dog dog);
         List<Dog> GetAllDogs();
         Dog GetDogById(int id);
+        List<Dog> GetDogsByOwnerId(int ownerId);
     }
 }

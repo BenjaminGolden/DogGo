@@ -15,5 +15,7 @@ namespace DogGo.Interfaces
          void DeleteOwner(int id);
         List<Owner> GetAllOwners();
         Owner GetOwnerById(int id);
+
+        Owner GetOwnerByEmail(string email);
     }
 }

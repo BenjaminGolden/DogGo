@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace DogGo.Models
 {
-    public class Neighborhood
+    public class Totaltime
     {
-        public int Id { get; set; }
-        public string NeighborhoodName { get; set; }
+        public int Hours { get; set; }
+        public int Minutes { get; set; }
     }
 }
