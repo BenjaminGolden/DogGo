@@ -36,7 +36,7 @@
                     <option value="">Select Neighborhood</option>
                     @foreach (Neighborhood neighborhood in Model.Neighborhoods)
                     {
-                        <option value="@neighborhood.Id">@neighborhood.Name</option>
+                        <option value="@neighborhood.Id">@neighborhood.NeighborhoodName</option>
                     }
                 </select>
                 <span asp-validation-for="Owner.NeighborhoodId" class="text-danger"></span>

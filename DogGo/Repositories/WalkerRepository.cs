@@ -49,7 +49,7 @@ namespace DogGo.Repositories
                             Neighborhood = new Neighborhood     
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("NeighborhoodId")),
-                                Name = reader.GetString(reader.GetOrdinal("Neighborhood"))
+                                NeighborhoodName = reader.GetString(reader.GetOrdinal("Neighborhood"))
                             }
                         };
 
@@ -92,7 +92,7 @@ namespace DogGo.Repositories
                             Neighborhood = new Neighborhood
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                                Name = reader.GetString(reader.GetOrdinal("Name"))
+                                NeighborhoodName = reader.GetString(reader.GetOrdinal("Name"))
 
                             }
                            

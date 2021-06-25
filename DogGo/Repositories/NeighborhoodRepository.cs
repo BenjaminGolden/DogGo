@@ -40,7 +40,7 @@ namespace DogGo.Repositories
                         Neighborhood neighborhood = new Neighborhood()
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Name = reader.GetString(reader.GetOrdinal("Name"))
+                            NeighborhoodName = reader.GetString(reader.GetOrdinal("Name"))
                         };
                         neighborhoods.Add(neighborhood);
                     }

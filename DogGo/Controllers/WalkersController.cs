@@ -37,13 +37,18 @@ namespace DogGo.Controllers
         public ActionResult Details(int id)
         {
             Walker walker = _walkerRepository.GetWalkerById(id);
-            List<Walks> walks = _walksRepository.GetAllWalks();
+            List<Walks> walks = _walksRepository.GetWalksByWalkerId(id);
 
             WalkerProfileViewModel vm = new WalkerProfileViewModel()
             {
                 Walker = walker,
                 Walks = walks
             };
+
+            if (walker == null)
+            {
+                return NotFound();
+            }
 
             return View(vm);
         }
