@@ -11,7 +11,7 @@ namespace DogGo.Repositories
 {
     public class DogRepository : IDogRepository
     {
-        private readonly IConfiguration _config;
+         private readonly IConfiguration _config;
         public DogRepository(IConfiguration config)
         {
             _config = config;
