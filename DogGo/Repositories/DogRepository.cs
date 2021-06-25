@@ -11,7 +11,7 @@ namespace DogGo.Repositories
 {
     public class DogRepository : IDogRepository
     {
-        private readonly IConfiguration _config;
+         private readonly IConfiguration _config;
         public DogRepository(IConfiguration config)
         {
             _config = config;
@@ -164,8 +164,23 @@ namespace DogGo.Repositories
                     cmd.Parameters.AddWithValue("@name", dog.Name);
                     cmd.Parameters.AddWithValue("@breed", dog.Breed);
                     cmd.Parameters.AddWithValue("@ownerId", dog.OwnerId);
+                    if(dog.Notes != null)
+                    { 
                     cmd.Parameters.AddWithValue("@notes", dog.Notes);
-                    cmd.Parameters.AddWithValue("@imageUrl", dog.ImageUrl);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@notes", DBNull.Value);
+                    }
+                    if (dog.ImageUrl != null)
+                    {
+                        cmd.Parameters.AddWithValue("@imageUrl", dog.ImageUrl);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@imageUrl", DBNull.Value);
+                    }
+                    
                     cmd.Parameters.AddWithValue("@id", dog.Id);
 
                     cmd.ExecuteNonQuery();
