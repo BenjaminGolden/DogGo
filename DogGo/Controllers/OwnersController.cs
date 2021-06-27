@@ -30,7 +30,7 @@ namespace DogGo.Controllers
         {
             _ownerRepository = ownerRepository;
             _dogRepository = dogRepository;
-            
+            _walkerRepository = walkerRepository;
             _neighborhoodRepository = neighborhoodRepository;
         }
 
@@ -48,7 +48,7 @@ namespace DogGo.Controllers
         {
             Owner owner = _ownerRepository.GetOwnerById(id);
             List<Dog> dogs = _dogRepository.GetDogsByOwnerId(owner.Id);
-            List<Walker> walkers = _walkerRepository.GetWalkersInNeighborhood(owner.NeighborhoodId);
+            List<Walker> walkers = _walkerRepository.GetWalkersInNeighborhood(owner.Id);
 
             ProfileViewModel vm = new ProfileViewModel()
             {

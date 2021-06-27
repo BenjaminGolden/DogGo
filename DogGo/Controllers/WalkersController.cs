@@ -16,14 +16,17 @@ namespace DogGo.Controllers
     {
         private readonly IWalkerRepository _walkerRepository;
         private readonly IWalksRepository _walksRepository;
+        private readonly IOwnerRepository _ownerRepository;
 
         public WalkersController(
             IWalkerRepository walkerRepository,
-            IWalksRepository walksRepository
+            IWalksRepository walksRepository,
+            IOwnerRepository ownerRepository
             )
         {
             _walkerRepository = walkerRepository;
             _walksRepository = walksRepository;
+            _ownerRepository = ownerRepository;
         }
 
         private int GetCurrentUserId()
@@ -35,9 +38,17 @@ namespace DogGo.Controllers
         // GET: WalkersController
         public ActionResult Index()
         {
-
-            int ownerId = GetCurrentUserId();
             List<Walker> walkers = _walkerRepository.GetAllWalkers();
+            try
+            {
+            int ownerId = GetCurrentUserId();
+                Owner owner = _ownerRepository.GetOwnerById(ownerId);
+                walkers = _walkerRepository.GetWalkersInNeighborhood(owner.NeighborhoodId);
+            }
+            catch (Exception ex)
+            {
+                walkers = _walkerRepository.GetAllWalkers();
+            }
 
             return View(walkers);
         }
